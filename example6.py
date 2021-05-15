@@ -49,12 +49,12 @@ def generate_segment(xlim, ylim, current_x):
     x1 = _random.randrange(0, xlim)
     while x1 in current_x:
         x1 = _random.randrange(0, xlim)
-    current_x[x1] = 1
+    # current_x[x1] = 1
 
     x2 = _random.randrange(0, xlim)
-    while x2 in current_x:
+    while (x2 in current_x) or (x2 == x1):
         x2 = _random.randrange(0, xlim)
-    current_x[x2] = 1
+    # current_x[x2] = 1
     
     y1 = _random.randrange(0, ylim)
     y2 = _random.randrange(0,ylim)
@@ -71,25 +71,29 @@ def generate_segments(num_segments, xlim, ylim):
     current_x = {}
     segments = []
     while len(segments) < num_segments:
-        print(len(segments))
-        print('generating')
+        # print(len(segments))
+        # print('generating')
         new_seg = generate_segment(xlim, ylim, current_x)
-        print(new_seg)
+        # print(new_seg)
         intersection = False
         for segment in segments:
-            print(segment)
+            # print(segment)
             intersection = check_intersection(segment, new_seg)
-            print(intersection)
+            # print(intersection)
             if intersection:
                 break
         if intersection:
             continue
         else:
             segments.append(new_seg)
+            current_x[new_seg.left.x] = 1
+            current_x[new_seg.right.x] = 1
 
     return segments
 
-edges = generate_segments(8, 100, 100)
+print('generating segments')
+edges = generate_segments(30, 100, 100)
+print('segments generated, generating decomposition')
 random.shuffle(edges)
 
 pygame.init()
