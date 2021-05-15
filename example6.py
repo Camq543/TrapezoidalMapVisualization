@@ -92,7 +92,7 @@ def generate_segments(num_segments, xlim, ylim):
     return segments
 
 print('generating segments')
-edges = generate_segments(30, 100, 100)
+edges = generate_segments(50, 100, 100)
 print('segments generated, generating decomposition')
 random.shuffle(edges)
 
